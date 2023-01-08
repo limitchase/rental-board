@@ -1,0 +1,65 @@
+<div class="columns border-top">
+  <div class="column is-2 bg-light">
+    <div class="pl3 pr2">
+      <%= render 'search_panel' %>
+    </div>
+
+    <br>
+    
+    <div class="pl3 pr2">
+      <%= render 'panel' %>
+    </div>
+
+    <div class="pl3 pr2">
+      <%= render 'price_panel' %>
+    </div>
+  </div>
+
+  <div class="column is-8 pl4 pr2">
+    <% @listings.each do |listing| %>
+    <div class="columns border-bottom-thick pt1 pr2">
+
+      <div class="column is-2" style="position: relative;">
+        <div class="stick-to-bottom">
+
+        <% if listing.images.attached? %>
+          <%= link_to image_tag(listing.images.first.variant(resize: "200x200>")), listing %>
+        <% else %>
+          <%= link_to image_tag("default_house_pic.png", alt: "No listing pictures", width: 200, height: 200), listing %>
+        <% end %>
+        </div>
+      </div>
+
+      <div class="column is-6">
+        <h3 class="title is-4 index-title"><%= link_to listing.title, listing %></h3>
+        <h4 class="title is-4 index-title">$<%= listing.price %></h4>
+        <div class="pv2 f6">
+          <%= sanitize(listing.description.truncate(200, separator: '</p>')) %>
+        </div>
+
+      </div>
+        <div class="column has-text-left pr4">
+          <%= listing_type(listing.listing_type) %>
+          <p class="pt2 f6"><%= listing.location %></p>
+          
+          <% if listing.working_url?(listing.author) %>
+            <br>
+            <%= link_to "External link", listing.author, class: "button is-small" %>
+          <% end %>
+
+          <% if current_user.try(:admin) || listing_author(listing) %>
+            <ul class="pv3">
+              <li class="inline-block f6">Admin controls: </li>
+              <li class="inline-block">
+                <%= link_to 'View', listing, class: 'button is-small is-link is-outlined' %></li>
+              <li class="inline-block">
+                <%= link_to 'Edit', edit_listing_path(listing), class: 'button is-small is-link is-outlined' %></li>
+              <li class="inline-block">
+                <%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button is-small is-link is-outlined' %></li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

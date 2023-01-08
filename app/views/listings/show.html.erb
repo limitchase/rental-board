@@ -1,0 +1,49 @@
+<div class="columns pt4 pb5 pl3 pr3">
+  <div class="column is-7 is-offset-1">
+    <h1 class="title is-1"><%= @listing.title %></h1>
+    <div class="content">
+      <ul class="list pb1">
+        <li class="inline-block f4 pr2"><%= listing_type(@listing.listing_type) %></li>
+        <li class="inline-block f4 pr2">$<%= @listing.price %></li>
+        <li class="inline-block f4 ph2"><i class="fa fa-pin"></i> <%= @listing.location %></li>
+      </ul>
+      <p class="pb3 border-bottom">Post <%= time_ago_in_words(@listing.created_at) %> ago by &nbsp<strong><%= @listing.user.name %></strong></p>
+    </div>
+
+    <div class="pt1"><%= sanitize markdown_to_html(@listing.description) %></div>
+    <br>
+    <% if @listing.images.attached? %>
+      <div class="columns is-multiline">
+        <% @listing.images.each do |image| %>
+          <div class="column is-one-third">
+            <%# <%= image_tag image.variant(resize: "800x600>") %>
+            <%= link_to image_tag(image.variant(resize: "300x300>")), image %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="column is-3 is-offset-1">
+    <% if @listing.working_url?(@listing.author) %>
+        <%= link_to "External link", @listing.author, class: "button is-medium is-dark" %>
+    <% end %>
+    <br><br>
+        
+    <% if user_signed_in? && current_user.id != @listing.user_id %>
+        <%= link_to "Private Message #{@listing.user.name}", conversations_path(sender_id: current_user.id, recipient_id: @listing.user.id), method: 'post', class:"button is-link" %>
+      <% elsif user_signed_in? && current_user.id == @listing.user_id  %>
+        <%= link_to "Conversations", conversations_path %>
+      <% else %>
+        <%= link_to "Sign up to message #{@listing.user.name}", new_user_registration_path %>
+    <% end %>
+    
+    <% if current_user.try(:admin) || listing_author(@listing) %>
+      <div class="bg-light pa3 mb2 mt4 border-radius-3">
+        <p class="f6 pb1">Admin actions:</p>
+        <%= link_to 'Edit', edit_listing_path(@listing), class: 'button is-small is-link is-outlined' %></li>
+        <%= link_to 'Delete', @listing, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class: 'button is-small is-link is-outlined' %></li>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<%= simple_form_for @listing, html: { multipart: true } do |f| %>
+  <%= f.error_notification %>
+
+      <div class="field">
+        <div class="control">
+        <%= f.input :title, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, placeholder: "Enter listing title" %>
+        </div>
+      </div>
+
+
+    <div class="columns">
+      <div class="field column is-4">
+        <div class="control">
+          <label class="label">Listing Type:</label>
+          <div class="control has-icons-left">
+            <span class="select">
+              <%= f.input_field :listing_type, collection: Listing::LISTING_TYPES, prompt: "Select a listing type", required: true %>
+            </span>
+            <span class="icon is-small is-left">
+              <i class="fa fa-bed"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+
+        <div class="field">
+          <div class="control">
+            <%= f.input :location, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, hint: 'Examples: "San Francisco, CA", "New York", "Anywhere"' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="field">
+          <div class="control">
+            <%= f.input :price, required: true, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, placeholder: 'monthly rate' %>
+          </div>
+        </div>
+
+      <div class="field">
+        <div class="control">
+          <%= f.input :description, required: true, input_html: { class: "textarea" }, wrapper: false, label_html: { class: "label" }, placeholder: 'Good descriptions get better results!' %>
+        </div>
+      </div>
+
+    <hr/>
+    
+    <div class="columns">
+      <div class="field column">
+        <div class="control">
+          <%= f.input :author, required: false, input_html: { class: "input" }, wrapper: false, label_html: { class: "label" }, label: "External link (optional)", placeholder: "Enter full link such as https://name.com"%>
+        </div>
+      </div>
+    </div>
+
+    <label class="label">Upload picture(s)</label>
+    <div class="field">
+      <div class="control">
+        <%= f.input :images, as: :file,  input_html: { multiple: true, direct_upload: true }, label: false, wrapper: false %>
+      </div>
+    </div>
+
+    <%= f.button :submit, class: "button is-primary is-large is-rounded mv4" %>
+
+<% end %>

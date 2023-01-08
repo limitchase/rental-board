@@ -1,0 +1,65 @@
+// *= require trix
+
+@import "bulma";
+@import "functions";
+@import "listings";
+@import "direct_uploads";
+
+.notification {
+  border-radius: 0;
+}
+
+.notification:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.hint {
+  font-size: small;
+}
+
+.tag {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 16px !important;
+}
+
+.panel {
+  box-shadow: none;
+}
+
+.navbar.is-link {
+  padding: 3px 0px 2px 0px;
+}
+
+.footer {
+  background-color: #3273dc;
+}
+
+footer {
+  background-color: #3273dc;
+  flex-shrink: 0;
+}
+
+.content ul {
+  margin-left: 0px;
+}
+
+.page-container {
+  position: relative;
+  flex: 1 0 auto;
+  padding-bottom: 24px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-textbox {
+  width: 100%;
+}

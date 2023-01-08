@@ -1,0 +1,17 @@
+<nav class="panel">
+  <p class="text-uppercase has-text-gray pv1 f6">Sort by price</p>
+
+  <ul class="mb3 pa0">
+    <li class="pv1">
+      <%= link_to 'All', listings_path, class: "button is-fullwidth is-dark" %>
+    </li>
+
+    <li class="pv1">
+      <%= link_to 'Ascending', listings_path(price: "ascending"), class: "button is-fullwidth is-primary" %>
+    </li>
+
+    <li class="pv1">
+      <%= link_to 'Descending', listings_path(price: "descending"), class: "button is-fullwidth is-link" %>
+    </li>
+  </ul>
+</nav>

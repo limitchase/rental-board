@@ -1,0 +1,11 @@
+<nav class="panel">
+    <div class="search-bar">
+    <%= form_tag(listings_path, method: :get) do %>
+      <p class="text-uppercase has-text-gray pv1 f6">Search and filter options</p>
+      <%= text_field_tag :search, params[:search], placeholder: "Title/location keyword", class: "form-textbox" %>
+      <%= text_field_tag :minprice, params[:minprice], placeholder: "Minimum price", class: "form-textbox"%>
+      <%= text_field_tag :maxprice, params[:maxprice], placeholder: "Maximum price", class: "form-textbox" %>
+      <%= submit_tag "Search" %>
+      <% end %>
+  </div>
+</nav>

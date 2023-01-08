@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= Rails.configuration.application_name %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+  </head>
+
+  <body class="<%= yield (:body_class) %>">
+    <% if flash[:notice] %>
+      <div class="notification is-success global-notification">
+        <p class="notice"><%= notice %></p>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+    <div class="notification is-danger global-notification">
+      <p class="alert"><%= alert %></p>
+    </div>
+    <% end %>
+    
+    <div class="page-container">
+      <nav class="navbar is-link" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <%= link_to root_path, class:"navbar-item" do %>
+            <h1 class="title is-5 has-text-white"><%= Rails.configuration.application_name %></h1>
+          <% end  %>
+          <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+
+        <div class="navbar-menu" id="navMenu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <%= link_to 'Post Listing', new_listing_path, class: "navbar-item button is-primary is-rounded" %>
+                </p>
+                <% if user_signed_in? %>
+                  <div class="navbar-item has-dropdown is-hoverable">
+                    <%= link_to 'Account', edit_user_registration_path, class: "navbar-link" %>
+                    <div class="navbar-dropdown is-right">
+                      <%= link_to current_user.name, edit_user_registration_path, class:"navbar-item" %>
+                      <%= link_to "Conversations", conversations_url, class:"navbar-item" %>
+                      <%= link_to "Log Out", destroy_user_session_path, method: :delete, class:"navbar-item" %>
+                    </div>
+                  </div>
+                <% else %>
+                  <p class="control">
+                    <%= link_to "Sign In", new_user_session_path, class:"navbar-item button" %>
+                  </p>
+                  <p class="control">
+                    <%= link_to "Sign up", new_user_registration_path, class:"navbar-item button"%>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <%= yield %>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered has-text-white is-size-3 has-text-weight-bold" >
+          <p> How to use BroncoBoard </p>
+        </div>
+        
+        <div class="columns">
+          <div class="column  has-text-centered has-text-white">
+            <p>Step 1: Login In</p>
+            <p>Register an account today!</p>
+          </div>
+          <div class="column has-text-centered has-text-white">
+            <p>Step 2: Landlords</p>
+            <p>Create a listing with the "Post Listing" button in header.</p>
+            <p>Check your conversations from header menu > dropdown > "Conversations" or by opening your listing and clicking "Conversations".</p>
+          </div>
+          <div class="column has-text-centered has-text-white">
+            <p>Step 2: Tenants</p>
+            <p>View listings, with sort and filter options</p>
+            <p>Click a listing you like and click "Private Message"</p>
+            <p>Ask about the post you're interested in!</p>
+            <p>Check your conversations from header menu > dropdown > "Conversations" or by opening the listing and clicking "Conversations".</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
